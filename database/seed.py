@@ -1,45 +1,28 @@
-import asyncio
-from database import engine, async_session, Base
+from models import db
 from models import Author, Book, Chapter
 
 
-async def init_db(drop_tables=False):
-    if drop_tables:
-        Base.metadata.drop_all(engine)
-        Base.metadata.create_all(engine)
-
-    authors_data = [
-        {"name": "J.K. Rowling"},
-        {"name": "George R.R. Martin"},
-        {"name": "Agatha Christie"}
+def seed_data():
+    authors = [
+        Author(name="J.K. Rowling"),
+        Author(name="George R.R. Martin"),
+        Author(name="Agatha Christie")
     ]
+    db.session.add_all(authors)
+    db.session.commit()
 
-    books_data = [
-        {"title": "Harry Potter and the Philosopher's Stone", "publication_year": "1997", "author_id": 1},
-        {"title": "A Game of Thrones", "publication_year": "1996", "author_id": 2},
-        {"title": "Murder on the Orient Express", "publication_year": "1934", "author_id": 3}
+    books = [
+        Book(title="Harry Potter and the Philosopher's Stone", publication_year="1997", author_id=1),
+        Book(title="A Game of Thrones", publication_year="1996", author_id=2),
+        Book(title="Murder on the Orient Express", publication_year="1934", author_id=3)
     ]
+    db.session.add_all(books)
+    db.session.commit()
 
-    chapters_data = [
-        {"title": "The Boy Who Lived", "page_count": 15, "book_id": 1},
-        {"title": "The Vanishing Glass", "page_count": 12, "book_id": 1},
-        {"title": "Prologue", "page_count": 10, "book_id": 2}
+    chapters = [
+        Chapter(title="The Boy Who Lived", page_count=15, book_id=1),
+        Chapter(title="The Vanishing Glass", page_count=12, book_id=1),
+        Chapter(title="Prologue", page_count=10, book_id=2)
     ]
-
-    async with async_session() as session:
-        for author in authors_data:
-            author = Author(**author)
-            session.add(author)
-
-        for book in books_data:
-            book = Book(**book)
-            session.add(book)
-
-        for chapter in chapters_data:
-            chapter = Chapter(**chapter)
-            session.add(chapter)
-
-        await session.commit()
-
-if __name__ == '__main__':
-    asyncio.run(init_db())
+    db.session.add_all(chapters)
+    db.session.commit()

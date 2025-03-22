@@ -1,6 +1,5 @@
-from flask import Flask
-from database import db
-from database.create_db import create_db
+from flask import Flask, render_template
+from database.models import db, Book
 
 app = Flask(__name__)
 
@@ -14,13 +13,13 @@ db.init_app(app)
 def hello_world():
     return 'Hello World!'
 
-
-def init_db():
-    create_db()
+@app.route('/books')
+def show_books():
+    books = Book.query.all()
+    return render_template('books.html', books=books)
 
 
 def run_app():
-    init_db()
     app.run()
 
 
