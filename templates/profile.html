@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Профиль</title>
+</head>
+<body>
+    <h2>Привет, {{ current_user.username }}!</h2>
+
+    <p>Добро пожаловать в свой профиль.</p>
+
+    <form action="{{ url_for('get_students') }}">
+        <button type="submit">Посмотреть студентов</button>
+    </form>
+
+    <form action="{{ url_for('logout') }}">
+        <button type="submit">Выйти</button>
+    </form>
+</body>
+</html>
