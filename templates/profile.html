@@ -3,18 +3,73 @@
 <head>
     <meta charset="UTF-8">
     <title>Профиль</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f0f2f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .profile-container {
+            background: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            width: 360px;
+            text-align: center;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+        }
+
+        .username {
+            font-size: 20px;
+            color: #333;
+            margin-bottom: 30px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #0056b3;
+        }
+
+        .btn.logout {
+            margin-top: 20px;
+            background-color: #dc3545;
+        }
+
+        .btn.logout:hover {
+            background-color: #c82333;
+        }
+    </style>
 </head>
 <body>
-    <h2>Привет, {{ current_user.username }}!</h2>
-
-    <p>Добро пожаловать в свой профиль.</p>
-
-    <form action="{{ url_for('get_students') }}">
-        <button type="submit">Посмотреть студентов</button>
-    </form>
-
-    <form action="{{ url_for('logout') }}">
-        <button type="submit">Выйти</button>
-    </form>
+    <div class="profile-container">
+        <h2>Добро пожаловать!</h2>
+        <div class="username">{{ current_user.username }}</div>
+        <a href="{{ url_for('get_students') }}" class="btn">Посмотреть список студентов</a>
+        <form action="{{ url_for('logout') }}">
+            <button type="submit" class="btn logout">Выйти</button>
+        </form>
+    </div>
 </body>
 </html>
